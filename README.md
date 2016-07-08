@@ -1,2 +1,2 @@
 # demoscripts
-Demo Scripts 
+Demo Scripts for use by jfrog.  
