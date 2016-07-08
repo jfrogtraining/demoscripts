@@ -1,0 +1,5 @@
+Description - Trigger both Scanning and Impact Analysis events. Docker image "xray/demo" deployed to gcartifactory-us.jfrog.info/docker-local2 repository   
+Instructions - 
+  >bash ./start.sh <dockertag> i.e. bash ./start.sh 1 
+
+
