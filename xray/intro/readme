@@ -1,5 +1,16 @@
-Description - Trigger both Scanning and Impact Analysis events. Docker image "xray/demo" deployed to gcartifactory-us.jfrog.info/docker-local2 repository   
-Instructions - 
-  >bash ./start.sh <dockertag> i.e. bash ./start.sh 1 
+Description - Intro to XRAY impact analysis and content scanning. 
+Scripts - 
+ 1. dockerscan.sh creates a docker image with 2 vulnerabilities for content scanning
+ 2. mavenimpact.sh insert 2 new maven issues for impact analysis
+
+Directories - 
+  xraydemo directory - xray on http://10.200.11.11:8000 
+  xraygc directory - xray on google cloud platform 
+
+Instructions for each directory.   
+  >bash ./dockerscan.sh <docker tag> ie. bash ./dockerscan.sh 6
+  >bash ./mavenimpact.sh
+
+
 
 

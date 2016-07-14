@@ -1,0 +1,17 @@
+{
+ "type": "security",
+ "source_id": "victims-cve-dba",
+ "url": "https://wiki.apache.org/cassandra/JmxSecurity",
+ "created": "2015-02-25T17:33:03.881Z",
+ "components": [
+   {
+     "component_id": "gav://uk.org.retep.xmpp.xmpp:commons:9.11"
+   }
+ ],
+ "properties": {
+   "cve": "CVE-2012-2098",
+   "summary": "Cassandra: remote code execution via unauthenticated JMX/RMI interface",
+   "description": "Cassandra binds an unauthenticated JMX/RMI interface to all network interfaces. A remote attacher able to access the RMI, and API for the transport and remote execution of serialized Java, could use this flaw to execute arbitrary code as the user running Cassandra.",
+   "cvss_v2": "6"
+ }
+}
