@@ -1,0 +1,37 @@
+Description - Demo using virtual repo with user permission and properties to manage artifact lifecycle.  Use each curl commands as talking points. 
+
+Example - Developer deploy file to developer accessiable repository i.e. snapshot
+curl -u dev1:jfrog -X PUT "https://pwctraining.jfrog.io/pwctraining/maven-data-snapshot-local/iamdeveloper.txt" -T iamdeveloper.txt
+
+Example - Developer deploy file to developer accessbile repository using virutal repository
+curl -u dev1:jfrog -X PUT "https://pwctraining.jfrog.io/pwctraining/maven-snapshot-virtual/iamdeveloper.txt" -T iamdeveloper.txt
+
+Example - Developer deploy file to repos without deploy access - expect errors. 
+curl -u dev1:jfrog -X PUT "https://pwctraining.jfrog.io/pwctraining/maven-data-staging-local/iamdeveloper.txt" -T iamdeveloper.txt
+curl -u dev1:jfrog -X PUT "https://pwctraining.jfrog.io/pwctraining/maven-data-staging-local/iamdeveloper.txt" -T iamdeveloper.txt
+
+Example - Official release build goes to staging first. Dev Ops to get latest release war file on the staging repo.   
+curl -I -udevops1:jfrog "https://pwctraining.jfrog.io/pwctraining/maven-data-staging-local/org/jfrog/test/multi3/\[RELEASE\]/multi3-\[RELEASE\].war"
+
+Example - QA to find latest snapshot builds that passed unit tests. 
+# devops1 will get error because of permission error; QA has access to snapshot repo.  
+curl -I -udevops1:jfrog "https://pwctraining.jfrog.io/pwctraining/maven-data-snapshot-local/org/jfrog/test/multi3/3.92-SNAPSHOT/multi3-3.92-SNAPSHOT.war;unit-test+=passed"
+curl -I -uqa1:jfrog "https://pwctraining.jfrog.io/pwctraining/maven-data-snapshot-local/org/jfrog/test/multi3/3.92-SNAPSHOT/multi3-3.92-SNAPSHOT.war;unit-test+=passed"
+
+Example - QA finished testing and mark the war file on staging as qa.passed=true
+# Find all the builds on staging
+curl -uqa1:jfrog -X POST "https://pwctraining.jfrog.io/pwctraining/api/search/aql" -Tgetstaging.aql
+# Set qa.approved=true
+curl -uqa1:jfrog -X PUT "https://pwctraining.jfrog.io/pwctraining/api/storage/maven-data-staging-local/org/jfrog/test/multi3/3.95?properties=qa.approved=true&recursive=1"
+
+Example - Now lets move the staging build that has been approved by QA to release for Chef to pick up
+# Developer try to do this. 
+curl -udev1:jfrog -X POST "https://pwctraining.jfrog.io/pwctraining/api/copy/maven-data-staging-local/org/jfrog/test/multi3/3.95?to=/maven-data-release-local/org/jfrog/test/multi3/3.95"
+curl -udevops1:jfrog -X POST "https://pwctraining.jfrog.io/pwctraining/api/copy/maven-data-staging-local/org/jfrog/test/multi3/3.95?to=/maven-data-release-local/org/jfrog/test/multi3/3.95"
+
+Example - Dev Ops to get latest release war file that has qa.approved = true; 
+curl -I -udevops1:jfrog "https://pwctraining.jfrog.io/pwctraining/maven-data-release-local/org/jfrog/test/multi3/\[RELEASE\]/multi3-\[RELEASE\].war;qa.approved+=true"
+# Chef deployed to datacenter 1 and update metadata.  
+curl -udevops1:jfrog -X PUT "https://pwctraining.jfrog.io/pwctraining/api/storage/maven-data-release-local/org/jfrog/test/multi3/3.95?properties=chef.deployed=datacenter1&recursive=1"
+# Report on all artifacts deployed to datacenter1
+curl -uqa1:jfrog -X POST "https://pwctraining.jfrog.io/pwctraining/api/search/aql" -Tgetdeployed.aql

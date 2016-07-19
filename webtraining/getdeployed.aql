@@ -1,0 +1,9 @@
+items.find (
+    {
+      "repo": {"$eq":"maven-release-virtual"},
+      "name": {"$match":"*.war"},
+      "@chef.deployed":{"$eq":"datacenter1"}
+    }
+)
+.include("repo", "name", "path", "created", "stat.downloads")
+

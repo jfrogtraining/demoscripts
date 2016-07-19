@@ -1,0 +1,9 @@
+items.find (
+    {
+      "repo": {"$eq":"maven-snapshot-virtual"},
+      "name": {"$match":"*.war"},
+      "@unit-test":{"$eq":"passed"}
+    }
+)
+.include("repo", "name", "path", "created", "stat.downloads")
+
