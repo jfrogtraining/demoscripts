@@ -1,0 +1,9 @@
+Description - Demo using virtual repo with user permission and properties to manage artifact lifecycle. 
+
+Setup - Run both maven-example snapshot and release builds to populate artifactory.  Jenkins - http://104.197.116.198:8080/view/webtraining/
+
+Files - 
+- cmd-virtual-property: list of commands
+- getdeployed.aql: list all artifacts deployed by chef
+- getstaging.aql: list all artifacts with unit-tested=passed
+- iamdeveloper.txt: used to test developer can only deploy to snapshot repos. 
