@@ -1,0 +1,48 @@
+#!/bin/bash
+#Description - 
+# Copy artifacgts to distribution repo
+
+uri=${bamboo.artifactoryurl}/${bamboo.buildName}/${bamboo.buildNo}
+response=$(curl -i -u ${bamboo.artifactoryuser}:${bamboo.artifactorypassword} -H "Content-Type: application/json" -X POST $uri -d '{
+     "publish":"${bamboo.publish}", "overrideExistingFiles":"${bamboo.overrideExistingFiles}", "dryRun":"${bamboo.dryRun}", 
+     "sourceRepos":["${bamboo.sourceRepo}"], "targetRepo":"${bamboo.targetRepo}"}')
+
+# parse the response
+IFS=' '; read -ra status <<< $response
+if [ ${status[1]} -ne 200 ];
+then
+    echo Error moving artifacts to distribution repo: ${status[1]}
+    echo $response
+    exit -1
+fi
+
+#remove headers and parse package and version information.
+response=$(echo $response | sed -n '/{/,$p')
+packagelist=($(echo $response | jq -c '[.distributed[0].packages[] | .packageName, .versions[].versionName ]' | tr '\n[],' ' '))
+
+error=false
+echo "Copied following packages from ${bamboo.sourceRepo} to ${bamboo.targetRepo} : "
+
+for ((index=0; index<${#packagelist[*]}; index++)); 
+do
+    packageDeployed=${packagelist[$index]}
+    index=$index+1
+    packageVersion=${packagelist[$index]}
+    echo $packageDeployed : $packageVersion
+    
+    bintrayuri=${bamboo.bintrayurl}/$packagedDeployed/versions/$packageVersion
+    response=$(curl -i -u ${bamboo.bintrayuser}:${bamboo.bintraypassword} -H "Content-Type: application/json" -X POST $bintrayuri -d '{ 
+       "username":"${bamboo.mvncentraluser}", "password":"${bamboo.mvncentralpassword}"}')
+    IFS=' '; read -ra status <<< $response
+    if [ ${status[1]} -ne 200 ];
+    then
+       echo Error: Fail to promote $packageDeployed:$packageVersion to maven central - continuing 
+       error=true
+    fi
+done
+
+if [ "$error" = true ];
+then
+   exit -1
+fi
+exit 0

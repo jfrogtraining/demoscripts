@@ -1,0 +1,40 @@
+Description - Provide shell script to copy from Artifactory local repository to Artifactory Distribution Repository which will copy the files to Bintray and be promoted to Maven Central. 
+
+Files - 
+- bamboo-distribute - script for bamboo CI server. 
+
+Prerequisites - 
+- Install jq (version 1.3+) to your Bamboo server(s) : https://stedolan.github.io/jq/download/ (jq is the bash jason parser) 
+- Set up Distribution Repository in Artifactory version 4.10+ https://www.jfrog.com/confluence/display/RTF/Distribution+Repository and the rules set up appropriately. 
+
+Setup - three steps
+Step 1: Bamboo Global Variables - add the following variables (see below for example). This is generally a one time setup. Password will be hidden throughtout Bamboo projects. 
+- artifactorypassword
+- artifactoryurl i.e. https://gcartifactory-us.jfrog.info/artifactory/api/build/distribute
+- artifactoryuser
+- bintraypassword
+- bintrayurl i.e. https://api.bintray.com/maven_central_sync/spring/jars
+- bintrayuser
+- mvncentralpassword
+- mvncentraluser
+
+Step 2: Set up plan variables - for each of your build plans add the following variables: With the exception of the build number and dryRun - the rest of the variables generally do not change. Further documentation can be found at - https://www.jfrog.com/confluence/display/RTF/Artifactory+REST+API#ArtifactoryRESTAPI-DistributeBuild.  See below for example. 
+- buildName - name of the bamboo build plan
+- buildNo 
+- dryRun - default is true {feel free to change to true}
+- overrideExistingFiles - default false
+- publish - default true
+- sourceRepo - Artifactory source local repo. 
+- targetRepo - Artifactory distribution repo. 
+
+Step 3 - Create Task in the build plan - In your build plan, create a shell script task and cut and paste the attached file to the inline script - can optionally save the attached file and use file location.  
+- The script will use the above global and plan variables. 
+- The script makes a Artifactory (version 4.10) CURL API call to copy artifacts from local repository to distribution repository and CURL will respond with json list of artifacts and its version deployed to bintray.  Next, the script iterates thru this list with Bintray CURL api to copy the artifacts from bintray to maven central.  
+- You MUST user "Run Customize" to have Bamboo override the plan variables to use i.e. BuildNo and dryRun. 
+
+Messages - 
+- The task will fail if there are any errors.  
+- List all the copied packages from <sourceRepo> to <targetRepo> 
+- List all the packages that failed to deploy to maven central. 
+
+
