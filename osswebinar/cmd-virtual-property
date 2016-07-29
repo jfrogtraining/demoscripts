@@ -1,0 +1,31 @@
+Description - Demo using virtual repo with user permission and properties to manage artifact lifecycle.  Use each curl commands as talking points. 
+
+Example - Developer deploy file to developer accessiable repository i.e. snapshot
+curl -u dev1:jfrog -X PUT "http://104.197.78.59:8081/artifactory/maven-snapshot-local/iamdeveloper.txt" -T iamdeveloper.txt
+------------------
+
+Example - Developer deploy file to developer accessbile repository using virutal repository -note it goes to maven-snapshot-local
+curl -u dev1:jfrog -X PUT "http://104.197.78.59:8081/artifactory/maven-snapshot-virtual/iamdeveloper.txt" -T iamdeveloper.txt
+-----------------
+
+Example - Developer deploy file to repos without deploy access - expect errors. 
+curl -u dev1:jfrog -X PUT "http://104.197.78.59:8081/artifactory/maven-staging-local/iamdeveloper.txt" -T iamdeveloper.txt
+-----------------
+
+Example - QA find all the snapshot builds, change the getstaging.xml to maven-release-virtual to look for relesae versions.  
+# Find all the builds on staging
+curl -uqa1:jfrog -X POST "http://104.197.78.59:8081/artifactory/api/search/aql" -Tgetstaging.aql
+-----------------
+
+Example - Now lets move the staging build that has been approved by QA to release - this requires Pro and illustration of what Pro can do. 
+-----------------
+curl -udev1:jfrog -X POST "http://104.197.78.59:8081/artifactory/api/copy/maven-staging-local/org/jfrog/test/multi3/3.99?to=/maven-release-local/org/jfrog/test/multi3/3.99"
+
+jfrog rt cp maven-staging-local/org/jfrog/test/multi3/3.99/* /maven-release-local/org/jfrog/test/multi3/3.99/*
+
+
+Example - Troubleshooting with ?trace
+-----------------
+References: https://www.jfrog.com/confluence/display/RTF/Artifactory+Query+Language
+curl -udevops1:jfrog "http://104.197.78.59:8081/artifactory/maven-release-local/org/jfrog/test/multi3/3.98/multi3-3.98.war?trace"
+
