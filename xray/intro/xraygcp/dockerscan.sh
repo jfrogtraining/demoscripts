@@ -8,6 +8,6 @@ curl -H "X-JFrog-Art-Api:AKCp2UPLgsEE4gEfqrwyrG6Bs6N2bvX4autoYcQyXXEpSnwkuYQ9epZ
 echo ">>> Building docker image"
 docker login -u stanleyf -p AKCp2UPLgsEE4gEfqrwyrG6Bs6N2bvX4autoYcQyXXEpSnwkuYQ9epZdy4aqtdoA7LxMqh2xP gcartifactory-us.jfrog.info:5002
 docker build -t gcartifactory-us.jfrog.info:5002/xray/demo:$1 .
-docker push gcartifactory-us.jfrog.info/xray/demo:$1
+docker push gcartifactory-us.jfrog.info:5002/xray/demo:$1
 echo ">>> xray/demo deployed to artifactory"  
 
