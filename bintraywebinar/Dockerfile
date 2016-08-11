@@ -4,9 +4,9 @@ MAINTAINER markg@jfrog.com
 
 ADD jfrog /root/
 
-COPY ./bintrayrocks-1.0.tgz /root/
+COPY ./amaze-1.0.tgz /root/
 
-RUN /bin/tar -xvf /root/bintrayrocks-1.0.tgz
+RUN /bin/tar -xvf /root/amaze-1.0.tgz
 
 RUN mv /exec /root/exec
 
