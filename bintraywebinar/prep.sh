@@ -7,5 +7,5 @@ jfrog rt u bintrayrocks-1.0.tgz generic-local/jfrog/bintray/bintray-webinar/bint
 docker build -t gcartifactory-us.jfrog.info:5002/bintray-demo:1.0 .
 docker push gcartifactory-us.jfrog.info:5002/bintray-demo:1.0
 jfrog bt acc-keys --org=jfrog-int create webinar-key2
-jfrog bt ent --access=r --keys=webinar-key2 create jfrog-int/bintray-webinar-gen
-jfrog bt ent --access=r --keys=webinar-key2 create jfrog-int/bintray-webinar-test-reg
+jfrog bt ent --access=r --keys=webinar-key2 create jfrog-int/bintray-webinar-test2-gen
+jfrog bt ent --access=r --keys=webinar-key2 create jfrog-int/bintray-webinar-test2-reg
