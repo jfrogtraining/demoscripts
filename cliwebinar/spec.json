@@ -1,0 +1,12 @@
+{
+    "files": [
+        {
+            "pattern": "gradle-dev-local/org/jfrog/example/gradle/**/*",
+            "target": "./",
+            "props": "build.name=gradle-example-ci-server;build.number=12",
+            "recursive": "true",
+            "flat" : "false",
+            "regexp": "false"
+        }
+    ]
+}
