@@ -11,3 +11,4 @@ jfrog rt u "sampleCli-$BUILD_NUM.tar.gz" generic-local/cli-example/sampleCli/ --
 
 jfrog rt bp cli-example $BUILD_NUM
 
+jfrog rt del --spec=specAQL.json

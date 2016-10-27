@@ -1,0 +1,12 @@
+{
+    "files" : [
+	{
+	    "aql" : {
+		"items.find" : {
+		    "repo" : "generic-local",
+		    "@build.name" : "cli-example"
+		}
+	    }
+	}
+    ]
+}
