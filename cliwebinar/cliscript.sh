@@ -3,12 +3,11 @@ export BUILD_NUM=1
 jfrog rt dl gradle-dev-local/org/jfrog/example/gradle/api/1.1/ --build-name=cli-example --build-number=$BUILD_NUM
 jfrog rt dl --spec=spec.json --build-name=cli-example --build-number=$BUILD_NUM
 
-jfrog rt bce gradle-example-ci-server 12
+jfrog rt bce cli-example $BUILD_NUM
 
-MYPATH="$(pwd)"
+tar -czvf "sampleCli-$BUILD_NUM.tar.gz" ./org
 
-tar -czvf sampleCli.tar.gz $MYPATH/org
+jfrog rt u "sampleCli-$BUILD_NUM.tar.gz" generic-local/cli-example/sampleCli/ --build-name=cli-example --build-number=$BUILD_NUM
 
-jfrog rt u sampleCli.tar.gz gradle-dev-local/org/jfrog/example/gradle/api/1.1/ --build-name=gradle-example-ci-server --build-number=12
+jfrog rt bp cli-example $BUILD_NUM
 
-jfrog rt bp gradle-example-ci-server 12
