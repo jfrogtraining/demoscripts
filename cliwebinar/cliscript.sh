@@ -12,3 +12,7 @@ jfrog rt u "sampleCli-$BUILD_NUM.tar.gz" generic-local/cli-example/sampleCli/ --
 jfrog rt bp cli-example $BUILD_NUM
 
 jfrog rt del --spec=specAQL.json
+
+jfrog bt pc jfrogtraining/generic/cli-example --desc="Example package for CLI deployment to bintray"
+
+jfrog bt u "sampleCli-$BUILD_NUM.tar.gz" "jfrogtraining/generic/cli-example/$BUILD_NUM" --publish=true
