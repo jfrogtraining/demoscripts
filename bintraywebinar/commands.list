@@ -1,5 +1,4 @@
 jfrog bt acc-keys --org=jfrog-int create webinar-key
 jfrog bt ent --access=r --keys=webinar-key create jfrog-int/amazing-gen
-jfrog bt ent --access=r --keys=webinar-key create jfrog-int/amazing-registry
-curl -fL -uwebinar-key@jfrog-int "https://jfrog-int.bintray.com/amazing-gen/jfrog/bintray/bintray-webinar/amaze/amaze-1.0.tgz" -O
-https://bintray.com/jfrog-int/product/amazing-product/1.0/accept_eula
+jfrog bt ent --access=r --keys=webinar-key create jfrog-int/amazing-reg
+https://bintray.com/jfrog-int/product/amazing-product/1.0/accept_eula?user=webinar-key@jfrog-int

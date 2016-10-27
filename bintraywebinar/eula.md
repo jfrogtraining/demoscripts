@@ -1,4 +1,4 @@
-# A Complete Fake Licnese Agreement
+# A Complete Fake License Agreement
 JFrog Demo is a compact and smart client that provides a simple interface that automates access to *Artifactory*, *Bintray* and *Mission Control* through their respective REST APIs.
 By using the JFrog CLI, you can greatly simplify your automation scripts making them more readable and easier to maintain.
 Several features of the JFrog CLI makes your scripts more efficient and reliable:
@@ -41,3 +41,5 @@ JFrog CLI can be used for a variety of functions with Artifactory, Bintray and M
 * [Using JFrog CLI with Artifactory](https://www.jfrog.com/confluence/display/RTF/JFrog+CLI)
 * [Using JFrog CLI with Bintray](https://bintray.com/docs/usermanual/cli/cli_jfrogcli.html)
 * [Using JFrog CLI with Mission Control](https://www.jfrog.com/confluence/display/MC/JFrog+CLI)
+
+# Accepting this agrees that the JFrog CLI is cool!
